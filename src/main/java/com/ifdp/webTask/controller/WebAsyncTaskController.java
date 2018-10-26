@@ -3,6 +3,7 @@ package com.ifdp.webTask.controller;
 import com.ifdp.webTask.service.WebAsyncTaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.WebAsyncTask;
@@ -22,11 +23,14 @@ public class WebAsyncTaskController {
     @Resource
     WebAsyncTaskService webAsyncTaskService;
 
+    @Resource(name = "taskExecutor")
+    ThreadPoolTaskExecutor threadPoolTaskExecutor;
+
     @GetMapping("/completion")
     public WebAsyncTask<String> asyncTaskCompletion(){
         logger.info("currentThread name = {}", currentThread().getName());
 
-        WebAsyncTask<String> webAsyncTask = new WebAsyncTask<>(10 * 1000, () -> {
+        WebAsyncTask<String> webAsyncTask = new WebAsyncTask<>(10 * 1000,threadPoolTaskExecutor, () -> {
             logger.info("aysnc thread = {}", currentThread().getName());
 
             sleep(5 * 1000L);
