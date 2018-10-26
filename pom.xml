@@ -24,6 +24,7 @@
 		<java.version>1.8</java.version>
         <scala.major-version>2.12</scala.major-version>
         <scala.version>${scala.major-version}.7</scala.version>
+        <alchim31.scala-version>3.4.2</alchim31.scala-version>
 	</properties>
 
 	<dependencies>
