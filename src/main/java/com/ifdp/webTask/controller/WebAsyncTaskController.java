@@ -17,7 +17,7 @@ public class WebAsyncTaskController {
     private final static Logger logger = LoggerFactory.getLogger(WebAsyncTaskController.class);
 
     private final static String ERROR_MESSAGE = "task error";
-    private final static String timeout_message = "task timeout";
+    private final static String TIMEOUT_MESSAGE = "task timeout";
 
     @Resource
     WebAsyncTaskService webAsyncTaskService;
@@ -65,4 +65,26 @@ public class WebAsyncTaskController {
         return webAsyncTask;
     }
 
+    @GetMapping("/timeout")
+    public WebAsyncTask<String> asyncTaskTimeout(){
+        logger.info("currentThread name = {}", currentThread().getName());
+
+        WebAsyncTask<String> webAsyncTask = new WebAsyncTask<>(10 * 1000, () -> {
+            logger.info("aysnc thread = {}", currentThread().getName());
+
+            sleep(15 * 1000L);
+
+            return TIMEOUT_MESSAGE;
+        });
+
+        webAsyncTask.onCompletion(() -> logger.info("task finish"));
+        webAsyncTask.onTimeout(() -> {
+            logger.info("task run timeout");
+            return TIMEOUT_MESSAGE;
+        });
+
+        logger.info("timeout end");
+
+        return webAsyncTask;
+    }
 }
