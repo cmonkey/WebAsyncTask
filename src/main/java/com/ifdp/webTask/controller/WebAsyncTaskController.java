@@ -42,4 +42,27 @@ public class WebAsyncTaskController {
 
     }
 
+    @GetMapping("/getException")
+    public WebAsyncTask<String> getException(){
+        logger.info("currentThread name = {}", currentThread().getName());
+
+        WebAsyncTask<String> webAsyncTask = new WebAsyncTask<>(10 * 1000, () -> {
+            logger.info("aysnc thread = {}", currentThread().getName());
+
+            sleep(5 * 1000L);
+
+            throw new Exception(ERROR_MESSAGE);
+        });
+
+        webAsyncTask.onCompletion(() -> logger.info("task finish"));
+        webAsyncTask.onError(() -> {
+            logger.info("task run exception");
+            return ERROR_MESSAGE;
+        });
+
+        logger.info("Exception end");
+
+        return webAsyncTask;
+    }
+
 }
