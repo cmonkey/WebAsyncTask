@@ -1,6 +1,6 @@
-package com.ifdp.webTask.controller;
+package com.services.webTask.controller;
 
-import com.ifdp.webTask.service.WebAsyncTaskService;
+import com.services.webTask.service.WebAsyncTaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;

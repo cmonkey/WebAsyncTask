@@ -1,4 +1,4 @@
-package com.ifdp.webTask.service;
+package com.services.webTask.service;
 
 import org.springframework.stereotype.Service;
 
