@@ -22,7 +22,7 @@ public class WebAsyncTaskController {
     @Resource
     WebAsyncTaskService webAsyncTaskService;
 
-    @GetMapping("/getCompletion")
+    @GetMapping("/completion")
     public WebAsyncTask<String> asyncTaskCompletion(){
         logger.info("currentThread name = {}", currentThread().getName());
 
@@ -42,8 +42,8 @@ public class WebAsyncTaskController {
 
     }
 
-    @GetMapping("/getException")
-    public WebAsyncTask<String> getException(){
+    @GetMapping("/exception")
+    public WebAsyncTask<String> asyncTaskException(){
         logger.info("currentThread name = {}", currentThread().getName());
 
         WebAsyncTask<String> webAsyncTask = new WebAsyncTask<>(10 * 1000, () -> {
