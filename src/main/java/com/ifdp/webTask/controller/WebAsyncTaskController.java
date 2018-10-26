@@ -30,7 +30,7 @@ public class WebAsyncTaskController {
     public WebAsyncTask<String> asyncTaskCompletion(){
         logger.info("currentThread name = {}", currentThread().getName());
 
-        WebAsyncTask<String> webAsyncTask = new WebAsyncTask<>(10 * 1000,threadPoolTaskExecutor, () -> {
+        WebAsyncTask<String> webAsyncTask = new WebAsyncTask<>(10 * 1000,() -> {
             logger.info("aysnc thread = {}", currentThread().getName());
 
             sleep(5 * 1000L);
@@ -90,5 +90,14 @@ public class WebAsyncTaskController {
         logger.info("timeout end");
 
         return webAsyncTask;
+    }
+
+    @GetMapping("/threadPool")
+    public WebAsyncTask<String> threadPool(){
+        return new WebAsyncTask<>(10 * 1000L, threadPoolTaskExecutor, () -> {
+            logger.info("thread Pool thread name = {}", currentThread().getName());
+
+            return webAsyncTaskService.getId();
+        });
     }
 }
